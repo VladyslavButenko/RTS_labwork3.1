@@ -1,16 +1,19 @@
 
-import androidx.appcompat.app.AppCompatActivity;
 
+//Labwork #3.1 Butenko Vladyslav IO-72
+
+
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class Lab1Activity extends AppCompatActivity {
+public class Main extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lab1);
 
@@ -22,21 +25,21 @@ public class Lab1Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    int num = Integer.parseInt(numbEditText.getText().toString());
-                    if (isPrimeNumb(num)) resTextView.setText("The number is prime!");
-                    else if (num % 2 == 0) resTextView.setText("The number is even!");
+                    int number = Integer.parseInt(numbEditText.getText().toString());
+                    if (isPrime(number)) resTextView.setText("Prime");
+                    else if (number % 2 == 0) resTextView.setText("Even");
                     else {
-                        int results[] = doFerma(num);
-                        resTextView.setText(String.format("A = %d, B = %d\nA * B = %d", results[0], results[1], num));
+                        int resArray[] = calculateFerma(number);
+                        resTextView.setText(String.format("A = %d, B = %d\nA * B = %d", resArray[0], resArray[1], number));
                     }
-                } catch (NumberFormatException e) {
-                    resTextView.setText("You must input unsigned integer!");
+                } catch (Exception e) {
+                    resTextView.setText("Unsigned integer must be entered!");
                 }
             }
         });
     }
 
-    private boolean isPrimeNumb(int n) {
+    private boolean isPrime(int n) {
         for (int i = 2; i <= Math.sqrt(n); i++) {
             if (n % i == 0)
                 return false;
@@ -44,14 +47,14 @@ public class Lab1Activity extends AppCompatActivity {
         return true;
     }
 
-    private int[] doFerma(int num) {
+    private int[] calculateFerma(int number) {
         int[] result = new int[2];
         int k = 0;
         int x;
         double y;
         do {
-            x = (int) (Math.sqrt(num) + k);
-            y = Math.sqrt(Math.pow(x, 2) - num);
+            x = (int) (Math.sqrt(number) + k);
+            y = Math.sqrt(Math.pow(x, 2) - number);
             k++;
         } while (y % 1 != 0);
         result[0] = (int) (x + y);
